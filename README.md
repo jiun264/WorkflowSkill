@@ -6,7 +6,8 @@
 
 - 閱讀 [使用指南](docs/USAGE.md) 了解可用流程與提問方式。
 - 閱讀 [導入指南](docs/INSTALLATION.md) 安裝到個人環境，或加入特定 repo。
-- Skill 原始檔位於 [.github/skills/git-workflow/SKILL.md](.github/skills/git-workflow/SKILL.md)。
+- Git 操作 skill：[git-workflow](.github/skills/git-workflow/SKILL.md)。
+- 單一 commit Code Diet skill：[commit-code-diet](.github/skills/commit-code-diet/SKILL.md)。
 
 ## 設計原則
 

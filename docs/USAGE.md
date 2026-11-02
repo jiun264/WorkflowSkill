@@ -22,6 +22,20 @@
 
 也可以直接描述需求，例如「看一下這個 repo 哪些變更還沒提交」或「幫我整理最近 10 個 commit」。
 
+## 單一 Commit Code Diet
+
+在 Copilot Chat 指定一筆 commit，讓 skill 只檢查該提交相對於 parent 的變更：
+
+```text
+/commit-code-diet 3a1b2c7 檢查冗餘條件、dead code、unused 和 unreachable；先只報告，不修改。
+```
+
+```text
+/commit-code-diet HEAD 做 Code Diet；只移除能證明不改變行為的重複判斷或不可達分支，完成後跑相關測試，不要 amend commit。
+```
+
+它會追查前面的 guard、狀態是否可能改變、控制流程和 symbol 引用。回報會區分已證實問題、可安全精簡候選與待確認項目；「搜尋不到引用」或「測試沒跑到」本身不作為刪除依據。預設只審查；只有明確要求套用精簡時才修改工作樹，不會自行 stage、commit 或改寫歷史。
+
 ## 它會做什麼
 
 - 先辨識 repo 根目錄、目前分支和工作區狀態。
