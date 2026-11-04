@@ -1,6 +1,6 @@
 ---
 name: commit-code-diet
-description: '針對單一 Git commit 做 Code Diet 與防禦性程式碼審查：檢查冗餘條件、重複判斷、dead code、unused symbols 和 unreachable paths。當使用者指定 commit/hash 或要求精簡某筆提交中的程式碼時使用。'
+description: '針對單一 Git commit 做 Code Diet 與防禦性程式碼審查：檢查冗餘條件、重複判斷、dead code、未使用變數與符號、unreachable paths。當使用者指定 commit/hash 或要求精簡某筆提交中的程式碼時使用。'
 user-invocable: true
 ---
 
@@ -30,7 +30,8 @@ user-invocable: true
 - **冗餘條件**：檢查前面的 guard、early return、分支條件或型別／範圍收窄，是否已使後續條件永遠為真或永遠為假。
 - **重複判斷**：確認同一值在中間未變更、且兩個檢查沒有不同副作用或不同錯誤契約，再判定重複。
 - **Dead code / unreachable**：追蹤控制流程和條件可滿足性；說明不可達的路徑及證據，不只憑直覺或測試未覆蓋就判定。
-- **Unused**：檢查語言工具、編譯器、linter、repo 內引用及動態註冊等用法。若工具可用，執行範圍最小的檢查；不要因 symbol 沒有純文字引用就直接刪除。
+- **多餘／未使用變數**：逐一檢查變更中新增或修改的區域變數、欄位、參數與解構綁定，確認是否有讀取、是否只寫入未讀取、是否被後續覆寫而從未使用，以及能否安全內嵌或移除。利用語言伺服器、編譯器警告、linter 或靜態分析器的 unused-variable 診斷，優先選擇只涵蓋變更檔案的檢查；查證作用域、閉包、反射、依名稱繫結、序列化或框架慣例等動態用途。對刻意保留的參數、解構項目或公開成員，確認 repo 慣例與工具抑制註記。不要把「沒有純文字引用」單獨當成刪除證據；無法判定時列為待確認。
+- **Unused symbols**：檢查語言工具、編譯器、linter、repo 內引用及動態註冊等用法。若工具可用，執行範圍最小的檢查；不要因 symbol 沒有純文字引用就直接刪除。
 
 ## 套用精簡與驗證
 
